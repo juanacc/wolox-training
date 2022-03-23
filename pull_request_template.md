@@ -1,11 +1,11 @@
 ## Summary
 
-[Change!] Describe your feature, problems you had, notes, improvements and others.
+[Change!] Creation of weets service that consumes the API http://numbersapi.com/ for the creation of 'weets'.
 
 ## Known Issues
 
-[Change!] List any known issue of the feature you are implementing.
+[Change!] There are no known issues.
 
 ## Trello Card
 
-[Change!] Link to the associated Trello card.
+[Change!] https://trello.com/c/3BU97OEH/32-servicios-promises-witter
