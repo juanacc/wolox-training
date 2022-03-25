@@ -1,6 +1,10 @@
 ## Summary
 
-[Change!] Creation of weets service that consumes the API http://numbersapi.com/ for the creation of 'weets'.
+[Change!]
+
+- Environment variable is added to specify the url of the API to be used.
+- Added axios.js file with functionality for API consumption, allowing reuse.
+- New entry is added in the configuration file to set environment variables necessary for the services.
 
 ## Known Issues
 
