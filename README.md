@@ -13,7 +13,6 @@ Nvm approach is preferred.
 
 Run `npm install` or `yarn` from rootpath of the project.
 
-
 #### Database configuration
 
 Before running the app, make sure you have [postgresql installed](https://www.digitalocean.com/community/tutorials/how-to-install-and-use-postgresql-on-ubuntu-14-04) and a db created, to create it run the following steps inside a psql terminal:
@@ -40,7 +39,6 @@ Then, set in `.env` some variables:
 To create a migration, run `./node_modules/.bin/sequelize migration:create --name="my-migration-name" --config ./migrations/config.js --migrations-path ./migrations/migrations`.
 
 To run them, execute `npm run migrations`.
-
 
 #### Starting your app
 
@@ -100,7 +98,6 @@ Factory By Models have also two additional functions, `factoryAllModels()` and `
 
 Also, it takes values predefined in the `type` field (Sequelize Datatype) and the validations you have in your MODEL (`validate` field),so if you want to validate those values on middlewares or somewhere else, factoryByModel won't take this in count. We strongly recommend to check if those validations cover the cases you expect, and if it doesn't, you can add your own code on this file (or just define a new factory).
 
-
 #### Debugging
 
 As we know, a NodeJS application is not something easy to debug and because of that we've added the `--inspect` flag to make it simpler. You can download a node inspection manager for Chrome, so Chrome DevTools will automatically start when you run your app using `npm run start-dev`, making your debugging easier. You can read more about the different inspector clients here: <https://nodejs.org/de/docs/guides/debugging-getting-started/#inspector-clients>
@@ -139,7 +136,7 @@ This project is maintained by [Wolox](https://github.com/wolox) and it was writt
 
 **w-training** is available under the MIT [license](LICENSE.md).
 
-    Copyright (c) 2019 Wolox
+    Copyright (c) 2022 Wolox
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
