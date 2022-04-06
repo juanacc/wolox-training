@@ -22,3 +22,14 @@ exports.REQUEST_PASSWORD_ERROR =
   'The password is required, it must be alphanumeric with a minimum of 8 characters';
 
 exports.REQUEST_LAST_NAME_ERROR = 'Last name is required';
+
+exports.INVALID_USER = 'invalid_user';
+exports.userNotFound = email =>
+  internalError(`The user with email ${email} does not exist`, exports.INVALID_USER);
+
+exports.JWT_ERROR = 'jwt-error';
+exports.jwtError = message => internalError(message, exports.JWT_ERROR);
+
+exports.EMAIL_PASSWORD_INCORRECT = 'email_password_incorrect';
+exports.emailPasswordIncorrect = () =>
+  internalError('Email or password is incorrect', exports.EMAIL_PASSWORD_INCORRECT);

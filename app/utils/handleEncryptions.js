@@ -5,3 +5,5 @@ exports.encryptPassword = password => {
   const hash = bcrypt.hashSync(password, salt);
   return hash;
 };
+
+exports.isPasswordCorrect = (password, passwordDB) => bcrypt.compareSync(password, passwordDB);
