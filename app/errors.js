@@ -27,9 +27,12 @@ exports.INVALID_USER = 'invalid_user';
 exports.userNotFound = email =>
   internalError(`The user with email ${email} does not exist`, exports.INVALID_USER);
 
-exports.JWT_ERROR = 'jwt-error';
+exports.JWT_ERROR = 'jwt_error';
 exports.jwtError = message => internalError(message, exports.JWT_ERROR);
 
 exports.EMAIL_PASSWORD_INCORRECT = 'email_password_incorrect';
 exports.emailPasswordIncorrect = () =>
   internalError('Email or password is incorrect', exports.EMAIL_PASSWORD_INCORRECT);
+
+exports.UNAUTHORIZED_USER_ERROR = 'unauthorized_user_error';
+exports.unauthorizedUserError = message => internalError(message, exports.UNAUTHORIZED_USER_ERROR);
