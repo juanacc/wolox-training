@@ -19,3 +19,15 @@ exports.create = user =>
       logger.error(err.message);
       errors.databaseError(err.message);
     });
+
+exports.getUsers = ({ page = 0, limit = 10 }) =>
+  User.findAndCountAll({
+    attributes: ['name', 'lastName', 'email'],
+    limit,
+    offset: page * limit,
+    order: [['lastName', 'ASC']]
+  })
+    .then(data => ({ ...{ page }, ...data }))
+    .catch(err => {
+      throw errors.databaseError(err.message);
+    });

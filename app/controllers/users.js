@@ -51,3 +51,16 @@ exports.signIn = (req, res) => {
       logger.info(errors.databaseError(err));
     });
 };
+
+exports.getUsers = (req, res) => {
+  const { page = 0, limit = 10 } = req.query;
+  userService
+    .getUsers({ page, limit })
+    .then(users => {
+      res.status(200).send(users);
+    })
+    .catch(err => {
+      logger.info(errors.databaseError(err));
+      res.status(500).send(errors.databaseError(err));
+    });
+};
