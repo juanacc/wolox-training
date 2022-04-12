@@ -40,3 +40,12 @@ exports.authenticate = (req, res, next) => {
       res.status(401).send(errors.jwtError(err));
     });
 };
+
+exports.isAdmin = (req, res, next) => {
+  if (req.user.role.toUpperCase() !== 'ADMIN') {
+    logger.error(`User ${req.user.email} without administrator privilege`);
+    res.status(401).send(errors.userNotAdmin(`User ${req.user.email} without administrator privilege`));
+    return;
+  }
+  next();
+};

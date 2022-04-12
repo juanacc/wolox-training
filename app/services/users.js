@@ -31,3 +31,12 @@ exports.getUsers = ({ page = 0, limit = 10 }) =>
     .catch(err => {
       throw errors.databaseError(err.message);
     });
+
+exports.update = (user, values) =>
+  user
+    .update(values)
+    .then(userUpdated => userUpdated)
+    .catch(err => {
+      logger.error(err.message);
+      errors.databaseError(err.message);
+    });
