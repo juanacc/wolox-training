@@ -88,7 +88,11 @@ exports.createRole = (req, res) => {
         .update(userExist, { role: 'ADMIN' })
         .then(userUpdated => sendInfoCreation(userUpdated, res, 'updated', 200));
     } else {
-      createUser(user, { email: user.email.toLowerCase(), role: 'ADMIN' }).then(userCreated => {
+      createUser(user, {
+        email: user.email.toLowerCase(),
+        role: 'ADMIN',
+        password: encryptPassword(user.password)
+      }).then(userCreated => {
         sendInfoCreation(userCreated, res);
       });
     }
