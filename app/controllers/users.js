@@ -79,18 +79,19 @@ exports.getUsers = (req, res) => {
     });
 };
 
-exports.createRole = (req, res) => {
+exports.createUserWithRole = (req, res) => {
   const user = req.body;
+  const role = user.role || 'ADMIN';
 
   userService.find({ email: user.email.toLowerCase() }).then(userExist => {
     if (userExist) {
       userService
-        .update(userExist, { role: 'ADMIN' })
+        .update(userExist, { role })
         .then(userUpdated => sendInfoCreation(userUpdated, res, 'updated', 200));
     } else {
       createUser(user, {
         email: user.email.toLowerCase(),
-        role: 'ADMIN',
+        role,
         password: encryptPassword(user.password)
       }).then(userCreated => {
         sendInfoCreation(userCreated, res);
