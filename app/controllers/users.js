@@ -6,21 +6,35 @@ const { encryptPassword, isPasswordCorrect } = require('../utils/handleEncryptio
 const { generateJWT } = require('../utils/jwt');
 const errors = require('../errors');
 
+const createUser = (user, data) =>
+  new Promise(resolve => {
+    Object.assign(user, data);
+    userService.create(user).then(userCreated => resolve(userCreated));
+  });
+
+const sendInfoCreation = (user, res, action = 'created', status = 201) => {
+  logger.info(`User ${user.name} with email ${user.email} ${action}`);
+  res.status(status).send({
+    msg: `User ${action}`,
+    email: user.email,
+    name: user.name,
+    lastName: user.lastName,
+    role: user.role
+  });
+};
+
 exports.create = (req, res) => {
   const user = req.body;
 
-  userService.find({ email: user.email }).then(userExist => {
+  userService.find({ email: user.email.toLowerCase() }).then(userExist => {
     if (userExist) {
       res.status(409).send(errors.userExist(user.email));
     } else {
-      Object.assign(user, { password: encryptPassword(user.password) });
-
-      userService.create(user).then(userCreated => {
-        logger.info(`User ${userCreated.name} with email ${userCreated.email} created`);
-        res
-          .status(201)
-          .send({ msg: `User ${userCreated.name} with email ${userCreated.email} created`, userCreated });
-      });
+      createUser(user, { email: user.email.toLowerCase(), password: encryptPassword(user.password) }).then(
+        userCreated => {
+          sendInfoCreation(userCreated, res);
+        }
+      );
     }
   });
 };
@@ -29,11 +43,11 @@ exports.signIn = (req, res) => {
   const { email, password } = req.body;
 
   userService
-    .find({ email })
+    .find({ email: email.toLowerCase() })
     .then(userExist => {
       if (userExist) {
         if (isPasswordCorrect(password, userExist.password)) {
-          generateJWT({ email: userExist.email })
+          generateJWT({ email: userExist.email.toLowerCase() })
             .then(token => {
               logger.info(`User ${userExist.email} signid in correctly`);
               res.status(200).send({
@@ -63,4 +77,25 @@ exports.getUsers = (req, res) => {
       logger.info(errors.databaseError(err));
       res.status(500).send(errors.databaseError(err));
     });
+};
+
+exports.createUserWithRole = (req, res) => {
+  const user = req.body;
+  const role = user.role || 'ADMIN';
+
+  userService.find({ email: user.email.toLowerCase() }).then(userExist => {
+    if (userExist) {
+      userService
+        .update(userExist, { role })
+        .then(userUpdated => sendInfoCreation(userUpdated, res, 'updated', 200));
+    } else {
+      createUser(user, {
+        email: user.email.toLowerCase(),
+        role,
+        password: encryptPassword(user.password)
+      }).then(userCreated => {
+        sendInfoCreation(userCreated, res);
+      });
+    }
+  });
 };

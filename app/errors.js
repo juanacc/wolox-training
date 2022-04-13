@@ -36,3 +36,6 @@ exports.emailPasswordIncorrect = () =>
 
 exports.UNAUTHORIZED_USER_ERROR = 'unauthorized_user_error';
 exports.unauthorizedUserError = message => internalError(message, exports.UNAUTHORIZED_USER_ERROR);
+
+exports.USER_NOT_ADMIN = 'user_not_admin';
+exports.userNotAdmin = message => internalError(message, exports.USER_NOT_ADMIN);
