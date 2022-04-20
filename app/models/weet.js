@@ -20,7 +20,7 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.INTEGER,
         field: 'user_id',
         reference: {
-          model: 'users',
+          model: 'user',
           key: 'id'
         }
       }
@@ -31,6 +31,9 @@ module.exports = (sequelize, DataTypes) => {
       tableName: 'weets'
     }
   );
-
+  // https://stackoverflow.com/questions/53882278/sequelize-association-called-with-something-thats-not-a-subclass-of-sequelize-m
+  Weet.associate = model => {
+    Weet.belongsTo(model.user, { foreignKey: 'userId' });
+  };
   return Weet;
 };
